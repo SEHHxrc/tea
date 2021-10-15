@@ -62,6 +62,7 @@ class TEA:
 
     def encrypt(self, plaintext: bytes):
         ciphertext = b''
+        plaintext += b'\x00' * (len(plaintext) % 8)
         for i in range(0, len(plaintext), 8):
             ciphertext += self.__calc(plaintext[i:i+8])
         return ciphertext
