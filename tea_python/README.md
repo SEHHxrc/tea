@@ -1,2 +1,2 @@
 # tea_python
-Implement with python(ctypes is used to calcuate)
+Implement with python(ctypes and struct are used to calcuate)
