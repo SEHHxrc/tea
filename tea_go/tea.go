@@ -1,3 +1,4 @@
+//The algorithm implemented by this program is similar to the ECB mode of block cipher
 package tea
 
 import (
@@ -26,23 +27,23 @@ func New(key []byte) (*TEA, error) {
 
 func (tea *TEA) Encrypt(plaintext []byte) (ciphertext []byte) {
 	var cipher [BLOCK_LENGTH]byte
-	for i := 0; i < len(plaintext)/BLOCK_LENGTH; i++ {
+	for i := 0; i < len(plaintext)/BLOCK_LENGTH; i++ { //encrypt every block
 		tea.calc(plaintext[i*BLOCK_LENGTH:(i+1)*BLOCK_LENGTH], cipher[:], "encrypt")
-		ciphertext = append(ciphertext, cipher[:]...)
+		ciphertext = append(ciphertext, cipher[:]...) //append each encrypted block
 	}
 	return
 }
 
 func (tea *TEA) Decrypt(ciphertext []byte) (plaintext []byte) {
 	var plain [BLOCK_LENGTH]byte
-	for i := 0; i < len(ciphertext)/BLOCK_LENGTH; i++ {
+	for i := 0; i < len(ciphertext)/BLOCK_LENGTH; i++ { //decrypt every block
 		tea.calc(ciphertext[i*BLOCK_LENGTH:(i+1)*BLOCK_LENGTH], plain[:], "decrypt")
-		plaintext = append(plaintext, plain[:]...)
+		plaintext = append(plaintext, plain[:]...) //append each decrypted block
 	}
 	return
 }
 
-func (tea *TEA) calc(text, result []byte, mode string) {
+func (tea *TEA) calc(text, result []byte, mode string) { //calculate every plaintext or ciphertext block(8 bytes long)
 	e := binary.BigEndian
 	v0, v1 := e.Uint32(text[0:]), e.Uint32(text[4:])
 	k0, k1, k2, k3 := e.Uint32(tea.key[0:]), e.Uint32(tea.key[4:]), e.Uint32(tea.key[8:]), e.Uint32(tea.key[12:])
