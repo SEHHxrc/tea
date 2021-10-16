@@ -1,2 +1,2 @@
-# tea_python
-Implement with python(ctypes is used to calcuate)
+# tea
+Implement tea algorithm in multiple languages
